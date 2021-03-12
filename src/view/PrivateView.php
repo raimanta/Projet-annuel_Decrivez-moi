@@ -31,7 +31,7 @@ class PrivateView extends View {
 	}
 
 	// pour le moment affiche une image aléatoire (jsp pk l'image ne veut pas s'afficher) et une liste de toutes les images (à enlever par la suite)
-	function jouer($tabImages) {
+	function jouer($tabImages, $data = []) {
 		$this->title = "Jouer une partie";
 
 		//echo "<script> started(40); </script>"; // jsp comment ca fonctionne le js, sinon ça c'est un code qui fait un compte à rebours

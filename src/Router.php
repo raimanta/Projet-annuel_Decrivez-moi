@@ -31,7 +31,7 @@ class Router {
 		else {
 			//Initialisation qui permet de recuperer l'id
 			$id = 0;
-			$array = array("jouer", "classement", "connexion", "deconnexion", "profil", "compte", "aPropos", "accueil", "");
+			$array = array("jouer", "classement", "connexion", "deconnexion", "profil", "compte", "aPropos", "accueil", "tags", "");
 			foreach (explode("/",$_SERVER['PATH_INFO']) as $value) {
 				if(!in_array($value, $array)){
 					$id=$value;
@@ -40,14 +40,21 @@ class Router {
 			}
 
 			foreach (explode("/",$_SERVER['PATH_INFO']) as $value) {
-			
+
 				if($value==="jouer"){
                     $verify = true;
                     $controller->jouer();
+					break;
+                }
+				else if($value==="tags"){
+                    $verify = true;
+                    $controller->showTags($_POST);
+					break;
                 }
 				else if($value==="classement"){
                     $verify = true;
                     $controller->showClassement();
+					break;
                 }
 				else if($value==="accueil"){
 					$verify = true;
@@ -118,6 +125,9 @@ class Router {
 		return Router::DEB_URL."/index.php/jouer";
 	}
 
+	function getTagsURL() {
+		return Router::DEB_URL."/index.php/tags";
+	}
 	function getClassementJoueurs(){
 		return Router::DEB_URL."/index.php/classement";
 	}

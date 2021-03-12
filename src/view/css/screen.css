@@ -70,3 +70,9 @@ form{
 form div {
     display: inline-block;
 }
+
+.imgJouer {
+	display: block;
+    margin-left: auto;
+    margin-right: auto
+}

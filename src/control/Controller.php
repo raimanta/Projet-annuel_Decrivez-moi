@@ -34,6 +34,9 @@ class Controller {
 		$this->view->jouer($this->imageStorage->readAllImages());
 	}
 
+	public function showTags($data) {
+		$this->view->jouer($this->imageStorage->readAllImages(), $data);
+	}
 
 	public function login(){
 		$this->view->makeLoginFormPage();
