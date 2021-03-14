@@ -26,7 +26,7 @@ class Router {
 
 		$verify = false;
 		if(!isset($_SERVER['PATH_INFO'])){
-			$view->makeAccueilPage();
+			$view->makeLoginFormPage();
 		}
 		else {
 			//Initialisation qui permet de recuperer l'id

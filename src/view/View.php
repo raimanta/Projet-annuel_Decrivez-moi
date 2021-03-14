@@ -23,89 +23,8 @@ class View{
 	}
 
 	function getMenu(){
-		return array($this->routeur->getPartieJouer()       => "Jouer une partie"      ,
-					 $this->routeur->getClassementJoueurs() => "Classement des joueurs",
-					 $this->routeur->getLoginURL()             => "Se connecter"          ,
-					 $this->routeur->getAccountCreationURL()   => "Créer un compte"       ,
-					 $this->routeur->getAProposURL()           => "A propos"
-				          );
+		return array();
 	}
-
-	function showClassementJoueurs($tabAccount) {
-		$this->title = "Classement des joueurs";
-		$tabTrie = $this->triClassement($tabAccount);
-
-		$this->content = "
-			<p>Il est exactement : <div id=\"heure_exacte\"></div><br>
-			</p>";
-
-		$this->content .= "
-		<p>Date du prochain dimanche : <div id=\"date_dimanche\"></div><br>
-		</p>";
-
-		$this->content .= "<ul>";
-		$i = 1;
-		foreach ($tabTrie as $key => $value) {
-			$this->content .= "<li> $i : $value->name avec un score de : $value->scoreSemaine </li>";
-			$i++;
-		}
-
-		$this->content .= "</ul>";
-		$this->render();
-	}
-
-
-	private function triClassement($tabAccount) {
-		$tabScore = [];
-		foreach ($tabAccount as $key => $value) {
-			$tabScore[] = $value->scoreSemaine;
-		}
-		rsort($tabScore);
-		$tabAccountTri = [];
-		foreach ($tabScore as $key => $value) {
-			for ($i=1; $i <= count($tabAccount); $i++) {
-				if ($tabAccount[$i]->scoreSemaine === $value) {
-					$tabAccountTri[] = $tabAccount[$i];
-				}
-			}
-		}
-		return $tabAccountTri;
-	}
-
-	function jouer($tabImages, $data = []) {
-		$this->title = "Jouer une partie";
-		var_dump($this->tags);
-		if (!empty($data)) {
-			array_push($this->tags, $data['tag']);
-		}
-		var_dump($this->tags);
-		//echo "<script> started(40); </script>"; // jsp comment ca fonctionne le js, sinon ça c'est un code qui fait un compte à rebours
-		$nom = $tabImages[random_int(1, count($tabImages))]->nom;
-
-		$val = "<img class = \"imgJouer\" src = " . Router::DEB_URL. "/src/view/images/$nom alt=\"erreur:/images/$nom\" style=\"display: block;margin-left: auto;margin-right: auto; width: 35%;\">";
-
-		$val .= "<form action=\"".$this->routeur->getTagsURL()."\" method=\"post\">
-				 	<div>Tags : <input type=\"text\" name=\"tag\"/></div>
-				 	<button type=\"submit\">Envoyer !</button>
-				 </form>";
-
-		$val .= "tags : <ul>";
-		foreach ($this->tags as $key => $value) {
-			$val .= "<li>$value</li>";
-		}
-
-		$val .= "</ul> <ul>";
-
-		foreach ($tabImages as $key => $value) {
-			$val .= "<li><img src= " . Router::DEB_URL . "/src/view/images/".  $value->getName()."></li>";
-		}
-		$val.= "</ul>";
-
-
-		$this->content = $val;
-		$this->render();
-	}
-
 
 	function makeAccueilPage(){
 		$this->title = "Page D'accueil";
@@ -119,26 +38,24 @@ class View{
 		$this->render();
 	}
 
-	function makeLoginFormPage(){
+	function makeLoginFormPage() {
 		$this->title = "Page de connexion";
 		//changer l'url, le renvoyer vers la page de connexion si c'est pas bon
-		$this->content = "<form action=\"".$this->routeur->getLoginURL()."\" method=\"post\">
-		<div>Login : <input type=\"text\" placeholder=\"Login\" name=\"login\"/></div>
-		<div>Mot de passe : <input type=\"password\" placeholder=\"Password\" name=\"password\"/></div>
+		$this->content = "
+		<h1> Connexion </h1>
+		<form action=\"".$this->routeur->getLoginURL()."\" method=\"post\">
+		<div>Login : <input type=\"text\" placeholder=\"Login\" name=\"login\"/></div> <br/>
+		<div>Mot de passe : <input type=\"password\" placeholder=\"Password\" name=\"password\"/></div> <br/>
 		<button type=\"submit\">Se connecter !</button>
-		</form>";
+		</form>
+		<a href=\"".Router::DEB_URL."/index.php/compte\"> S'inscrire </a>
+		";
 		$this->render();
 	}
 
-	function makeLogoutPage(){
-		$this->title = "Page de deconnexion";
-		$this->content = "<form action=\"".$this->routeur->getLogoutURL()."\" method=\"post\">
-		<button type=\"submit\">Se deconnecter</button>
-		</form>";
-		$this->render();
-	}
 
-	function makeAccountCreationPage($accountBuilder){
+
+	function makeAccountCreationPage($accountBuilder) {
 		$this->title = "Creation de compte";
 		$data = $accountBuilder->getData();
 		if($data==null){
@@ -148,7 +65,9 @@ class View{
 				$accountBuilder::PASSWORD_REF => ""
 			);
 		}
-		$this->content = "<form action=\"".$this->routeur->getAccountCreationURL()."\" method=\"post\">
+		$this->content = "
+		<h1> Création de compte </h1>
+		<form action=\"".$this->routeur->getAccountCreationURL()."\" method=\"post\">
 		<div>Nom : <input type=\"text\" placeholder=\"".$accountBuilder::NAME_REF."\" value=\"".$data[$accountBuilder::NAME_REF]."\" name=\"".$accountBuilder::NAME_REF."\"/>
 			<p>".$accountBuilder->getErrorName()."</p></div>
 
@@ -159,10 +78,10 @@ class View{
 			<p>".$accountBuilder->getErrorPassword()."</p></div>
 
 			<button type=\"submit\">Creer !</button>
-			</form>";
+			</form>
+			<a href=\"".Router::DEB_URL."/index.php/connexion\"> Se connecter </a>";
 		$this->render();
 	}
-
 
 	function makeAProposPage(){
 		include("APropos.php");
