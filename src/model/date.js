@@ -3,7 +3,6 @@ function affichBien(nombre) {
 }
 
 function dateEtHeure() {
-    console.log("je suis laaaaaaa");
     const date = new Date();
     document.getElementById('heure_exacte').innerHTML = 'Nous sommes le ' + date.getDate() + ' et il est : ' + affichBien(date.getHours()) + ':' + affichBien(date.getMinutes()) + ':' + affichBien(date.getSeconds());
 
@@ -27,7 +26,7 @@ function dateEtHeure() {
         nbrSecondesAvDimanche = (( (7 - date.getDay()) * 60) + (60 - date.getSeconds())) % 60;
     }
     else {
-        nbrHeuresAvDimanche   =  24 - date.getHours();
+        nbrHeuresAvDimanche   = 24 - date.getHours();
         nbrMinutesAvDimanche  = (60 - date.getMinutes());
         nbrSecondesAvDimanche = (60 - date.getSeconds());
     }
@@ -37,38 +36,11 @@ function dateEtHeure() {
                                                                                                         nbrMinutesAvDimanche  + "min et " +
                                                                                                         nbrSecondesAvDimanche + "s";
 
-    /*if(nbrHeuresAvDimanche === 0 && nbrMinutesAvDimanche === 0 && nbrSecondesAvDimanche === 1) {
+    if(nbrHeuresAvDimanche === 0 && nbrMinutesAvDimanche === 0 && nbrSecondesAvDimanche === 1) {
         //utiliser une méthode qui remet tous les scores à 0
-    }*/
-}
-
-let   i = 1;
-
-function dateEtHeureMin() {
-
-    document.getElementById('tps_restant').innerHTML = 'Il vous reste : ' + (60 - i) + 's';
-    i = i + 1;
-
-    if(i == 61) {
-        //alert("fin du temps");
-        console.log("fin du minuteur");
-        document.getElementById('tps_restant').style.display = "none";
-        document.getElementById('tags').style.display = "none";
-
     }
 }
-
-var FuncOL = new Array();
-
-function StkFunc(Obj) {
-    FuncOL[FuncOL.length] = Obj;
-}
-
-StkFunc(setInterval("dateEtHeure()", 100));
-StkFunc(setInterval("dateEtHeureMin()", 1000));
 
 window.onload = function() {
-    for ( i = 0; i < FuncOL.length; i++ ) {
-        FuncOL[i]();
-    }
+    setInterval("dateEtHeure()", 100);
 };

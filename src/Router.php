@@ -3,10 +3,10 @@ require_once("view/View.php");
 require_once("view/PrivateView.php");
 require_once("control/Controller.php");
 class Router {
-	const DB_ID    = 'mysql:host=mysql.info.unicaen.fr;dbname=22009146_bd;charset=utf8mb4';
-	const USER_ID  = '22009146';
-	const PASSWORD = 'zier3aiy5Yo7ohng';
-	const DEB_URL = "https://dev-".Router::USER_ID.".users.info.unicaen.fr/Projet_annuel";
+	const DB_ID    = 'mysql:host=mysql.info.unicaen.fr;dbname=22010959_bd;charset=utf8mb4';
+	const USER_ID  = '22010959';
+	const PASSWORD = 'Bi4ropieb4Ausiel';
+	const DEB_URL = "https://dev-".Router::USER_ID.".users.info.unicaen.fr/projet_annuel";
 	public $estco = false;
 	function main($imageStorage, $accountStorage){
 		session_start();
