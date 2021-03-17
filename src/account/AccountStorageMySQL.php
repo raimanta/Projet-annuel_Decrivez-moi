@@ -67,8 +67,7 @@ class AccountStorageMySQL implements AccountStorage {
 
 
 
-	public function readAllAccount()
-	{
+	public function readAllAccount() {
 		$array = array();
 		$stmt = $this->db->query("SELECT * FROM accounts");
 		foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $value){
@@ -97,7 +96,7 @@ class AccountStorageMySQL implements AccountStorage {
 		return false;
 	}
 
-	function update($compte){
+	function update($compte) {
 		$stmt = $this->db->query("SELECT * FROM accounts");
 		foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $value) {
 			$val = $value['account'];

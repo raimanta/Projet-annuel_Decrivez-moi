@@ -3,6 +3,7 @@ function affichBien(nombre) {
 }
 
 function dateEtHeure() {
+    console.log("je suis laaaaaaa");
     const date = new Date();
     document.getElementById('heure_exacte').innerHTML = 'Nous sommes le ' + date.getDate() + ' et il est : ' + affichBien(date.getHours()) + ':' + affichBien(date.getMinutes()) + ':' + affichBien(date.getSeconds());
 
@@ -26,7 +27,7 @@ function dateEtHeure() {
         nbrSecondesAvDimanche = (( (7 - date.getDay()) * 60) + (60 - date.getSeconds())) % 60;
     }
     else {
-        nbrHeuresAvDimanche   = 24 - date.getHours();
+        nbrHeuresAvDimanche   =  24 - date.getHours();
         nbrMinutesAvDimanche  = (60 - date.getMinutes());
         nbrSecondesAvDimanche = (60 - date.getSeconds());
     }
@@ -42,5 +43,5 @@ function dateEtHeure() {
 }
 
 window.onload = function() {
-    setInterval("dateEtHeure()", 100);
+    setInterval(dateEtHeure(), 100);
 };

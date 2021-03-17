@@ -7,7 +7,6 @@ class View{
 	public $menu;
 	public $feedback;
 
-	public $tags;
 
 	function __construct($routeur, $feedback=""){
 		$this->title = "";
@@ -15,7 +14,7 @@ class View{
 		$this->routeur = $routeur;
 		$this->menu = $this->getMenu();
 		$this->feedback=$feedback;
-		$this->tags = [];
+
 		//echo "<script> src=\"/barre.js\"></script>";
 	}
 	function render(){

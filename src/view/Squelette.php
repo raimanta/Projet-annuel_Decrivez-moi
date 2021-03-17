@@ -4,8 +4,8 @@
 		<title><?php echo $this->title; ?></title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href=<?php echo "\"".Router::DEB_URL."/src/view/css/screen.css\"" ?> />
-		<link rel="icon" type="image/png" href=<?php echo "\"".Router::DEB_URL."/src/view/images/Pichu.png\"" ?> />
-		<script language="javascript" type="text/javascript" src=<?php echo "\"". Router::DEB_URL."/src/model/date.js\""?> ></script>
+		<script language="javascript" type="text/javascript" src=<?php echo "\"". Router::DEB_URL."/src/view/js/date.js\""?> ></script>
+		<script language="javascript" type="text/javascript" src=<?php echo "\"". Router::DEB_URL."/src/view/js/minuteur.js\""?> ></script>
 	</head>
 
 

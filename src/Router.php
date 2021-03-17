@@ -7,14 +7,17 @@ class Router {
 	const USER_ID  = '22009146';
 	const PASSWORD = 'zier3aiy5Yo7ohng';
 	const DEB_URL = "https://dev-".Router::USER_ID.".users.info.unicaen.fr/Projet_annuel";
+	public $estco = false;
 	function main($imageStorage, $accountStorage){
 		session_start();
 		//unset($_SESSION['user']);
 
 		//On declare la view en fonction de l'utilisateur
 		$view = null;
-		if(isset($_SESSION['user'])){
+
+		if(isset($_SESSION['user']) && !$this->estco){
 			$view = new PrivateView($this, $_SESSION['user'], isset($_SESSION['feedback'])?$_SESSION['feedback']:"");
+			$this->estco = true;
 		}
 		else {
 			$view = new View($this, isset($_SESSION['feedback'])?$_SESSION['feedback']:"");
@@ -31,7 +34,7 @@ class Router {
 		else {
 			//Initialisation qui permet de recuperer l'id
 			$id = 0;
-			$array = array("jouer", "classement", "connexion", "deconnexion", "profil", "compte", "aPropos", "accueil", "tags", "");
+			$array = array("jouer", "classement", "connexion", "deconnexion", "profil", "compte", "aPropos", "accueil", "tags", "jouerPartie", "");
 			foreach (explode("/",$_SERVER['PATH_INFO']) as $value) {
 				if(!in_array($value, $array)){
 					$id=$value;
@@ -46,6 +49,11 @@ class Router {
                     $controller->jouer();
 					break;
                 }
+				else if($value==="jouerPartie"){
+					$verify = true;
+					$controller->jouerPartieCtrl();
+					break;
+				}
 				else if($value==="tags"){
                     $verify = true;
                     $controller->showTags($_POST);
@@ -100,14 +108,6 @@ class Router {
 					$view->makeAProposPage();
 				}
 			}
-			if(!$verify){
-				if($id!==0&&isset($_SESSION['user'])){
-					$controller->showInformation($id);
-				}
-				else {
-					$controller->showList();
-				}
-			}
 		}
 	}
 
@@ -123,6 +123,10 @@ class Router {
 
 	function getPartieJouer(){
 		return Router::DEB_URL."/index.php/jouer";
+	}
+
+	function getJouerPartieURL(){
+		return Router::DEB_URL."/index.php/jouerPartie";
 	}
 
 	function getTagsURL() {

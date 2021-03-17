@@ -1,11 +1,15 @@
 <?php
 require_once("model/Image.php");
+require_once("model/Jeu.php");
 require_once("account/Account.php");
 require_once("account/AccountBuilder.php");
 class Controller {
 	public $view;
 	public $imageStorage;
 	public $accountStorage;
+	public $jeu;
+	public $nomImg;
+
 	function __construct($view, $imageStorage, $accountStorage){
 		$this->view = $view;
 		$this->imageStorage = $imageStorage;
@@ -26,16 +30,19 @@ class Controller {
 		$this->view->showClassementJoueurs($this->accountStorage->readAllAccount());
 	}
 
-	public function showList() {
-		$this->view->makeListPage($this->imageStorage->readAll());
-	}
 
 	public function jouer() {
-		$this->view->jouer($this->imageStorage->readAllImages());
+		$this->view->jouer($this->imageStorage->readAllImages(), $this->imageStorage->readAllTags());
+	}
+
+	public function jouerPartieCtrl() {
+		$_SESSION['jeu'] = new Jeu($this->imageStorage->readAllImages(), $this->imageStorage->readAllTags());
+		$this->view->jouerPartieView($_SESSION['nomImg']);
 	}
 
 	public function showTags($data) {
-		$this->view->jouer($this->imageStorage->readAllImages(), $data);
+		$tab = $_SESSION['jeu']->jouerPartie($data);
+		$this->view->jouerPartieView($_SESSION['nomImg'], $tab);
 	}
 
 	public function login(){

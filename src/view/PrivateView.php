@@ -7,13 +7,17 @@ class PrivateView extends View {
 	public $menu;
 	public $account;
 	public $feedback;
+
+
+	public $image;
+
 	function __construct($routeur, $account, $feedback=""){
-		$this->title = "";
-		$this->content = "";
-		$this->routeur = $routeur;
-		$this->menu = $this->getMenu();
+		$this->title    = "";
+		$this->content  = "";
+		$this->routeur  = $routeur;
+		$this->menu     = $this->getMenu();
 		$this->feedback = $feedback;
-		$this->account = $account;
+		$this->account  = $account;
 	}
 
 	function getMenu(){
@@ -23,6 +27,64 @@ class PrivateView extends View {
 					 $this->routeur->getProfilURL()            => "Profil"       ,
 				     $this->routeur->getAProposURL()           => "A propos"               );
 	}
+
+	function jouer($tabImages, $tabTags, $data = []) {
+		$this->title = "Jouer une partie";
+
+
+
+		//Lien vers la fonction jouerPartie(...) ci dessous
+		$val = "<form action=\"".$this->routeur->getJouerPartieURL()."\" method=\"post\">
+		 		 	<button input type=\"submit\"> Lancer une partie </button>
+		 		 </form>";
+
+		$this->content = $val;
+		$this->render();
+	}
+
+	function jouerPartieView($nomImg, $tab=[]) {
+		$this->title = "Jouer une partieee";
+
+
+		$val = "<center> <div id=\"tps_restant\"></div></center><br>";
+
+		//$val = "<h2>$this->image</h2>";//Temporaire
+		$val .= "<img class = \"imgJouer\" src = " . Router::DEB_URL. "/src/view/images/$nomImg alt=\"erreur:/images/$nomImg\" style=\"display: block;margin-left: auto;margin-right: auto; width: 35%;\">";
+
+		$val .= "<div id=\"tags\"> <form action=\"".$this->routeur->getTagsURL()."\" method=\"post\">
+				 	<div>Tags : <input type=\"text\" name=\"tag\"/></div>
+				 	<button type=\"submit\">Envoyer !</button>
+				 </form></div>";
+
+		$val .= "<ul>";
+		for ($i=0; $i < count($tab); $i++) {
+			if ($i === 0) {
+				$val .= "Tags correspondant à l'image : ";
+				foreach ($tab[0] as $key => $value) {
+					$val .= "<li>$value</li>";
+				}
+			}
+			else {
+				$val .= "<br/><br/>Tags ne correspondant pas à l'image : ";
+				foreach ($tab[1] as $key => $value) {
+					$val .= "<li>$value</li>";
+				}
+			}
+
+		}
+		$val .= "</ul>";
+
+		$this->content = $val;
+		$this->render();
+	}
+
+	function makeProfilPage() {
+		$this->title = "Profil";
+
+		$this->content = "page de profil";
+		$this->render();
+	}
+
 
 	function makeAccueilPage(){
 		$this->title = "Page D'accueil";
@@ -36,12 +98,10 @@ class PrivateView extends View {
 		$tabTrie = $this->triClassement($tabAccount);
 
 		$this->content = "
-			<p>Il est exactement : <div id=\"heure_exacte\"></div><br>
-			</p>";
+			<div id=\"heure_exacte\"></div><br>";
 
 		$this->content .= "
-		<p>Date du prochain dimanche : <div id=\"date_dimanche\"></div><br>
-		</p>";
+		<br/><div id=\"date_dimanche\"></div><br>";
 
 		$this->content .= "<ul>";
 		$i = 1;
@@ -71,50 +131,6 @@ class PrivateView extends View {
 		}
 		return $tabAccountTri;
 	}
-
-
-	function jouer($tabImages, $data = []) {
-		$this->title = "Jouer une partie";
-		var_dump($this->tags);
-		if (!empty($data)) {
-			array_push($this->tags, $data['tag']);
-		}
-		var_dump($this->tags);
-		//echo "<script> started(40); </script>"; // jsp comment ca fonctionne le js, sinon ça c'est un code qui fait un compte à rebours
-		$nom = $tabImages[random_int(1, count($tabImages))]->nom;
-
-		$val = "<img class = \"imgJouer\" src = " . Router::DEB_URL. "/src/view/images/$nom alt=\"erreur:/images/$nom\" style=\"display: block;margin-left: auto;margin-right: auto; width: 35%;\">";
-
-		$val .= "<form action=\"".$this->routeur->getTagsURL()."\" method=\"post\">
-				 	<div>Tags : <input type=\"text\" name=\"tag\"/></div>
-				 	<button type=\"submit\">Envoyer !</button>
-				 </form>";
-
-		$val .= "tags : <ul>";
-		foreach ($this->tags as $key => $value) {
-			$val .= "<li>$value</li>";
-		}
-
-		$val .= "</ul> <ul>";
-
-		foreach ($tabImages as $key => $value) {
-			$val .= "<li><img src= " . Router::DEB_URL . "/src/view/images/".  $value->getName()."></li>";
-		}
-		$val.= "</ul>";
-
-
-		$this->content = $val;
-		$this->render();
-	}
-
-	function makeProfilPage() {
-		$this->title = "Profil";
-
-		$this->content = "page de profil";
-		$this->render();
-	}
-
-
 	function makeLogoutPage(){
 		$this->title = "Page de deconnexion";
 		$this->content = "<form action=\"".$this->routeur->getLogoutURL()."\" method=\"post\">

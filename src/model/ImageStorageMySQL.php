@@ -43,7 +43,7 @@ class ImageStorageMySQL implements ImageStorage {
 			$this->db->exec("CREATE TABLE tags
 			(
 			    id INT(255) NOT NULL AUTO_INCREMENT,
-			    tag VARCHAR(20),
+			    tag VARCHAR(255),
 			    PRIMARY KEY (id)
 			)");
 			$tag1 = serialize(new Tag("cat"));
@@ -92,4 +92,5 @@ class ImageStorageMySQL implements ImageStorage {
 		}
 		return $array;
 	}
+
 }
