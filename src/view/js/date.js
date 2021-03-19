@@ -42,19 +42,21 @@ function dateEtHeure() {
     }*/
 }
 
-let   i = 1;
+
+/*function insert(tab) {
+    var tag = document.getElementById("tag");
+    tab.push(tag.value);
+    alert(tab);
+    return tab;
+}*/
+
+let i = 1;
 
 function dateEtHeureMin() {
-
     document.getElementById('tps_restant').innerHTML = 'Il vous reste : ' + (60 - i) + 's';
-    i = i + 1;
-
-    if(i == 61) {
-        //alert("fin du temps");
-        console.log("fin du minuteur");
-        document.getElementById('tps_restant').style.display = "none";
-        document.getElementById('tags').style.display = "none";
-
+    i++;
+    if( i > 10 ) {
+        i = 1;
     }
 }
 

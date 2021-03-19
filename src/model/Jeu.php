@@ -5,7 +5,7 @@
         public $image;
 
         public $tabImages;
-
+        public $nomImage;
 
         function __construct($tabImages, $tabTags) {
             $this->tablTags    = [];
@@ -28,9 +28,12 @@
     		//$this->image = $tabNoms[random_int(0, count($tabNoms)-1)];
 
     		//récupère une image
-    		$this->image = [$tabNoms[0] => $this->tabImages[$tabNoms[0]]];
+            $nomImage = array();
 
-            $_SESSION['nomImg'] = key($this->image);
+            for( $i = 0; $i < sizeof($tabImages); $i++ ) {
+                $this->image = [$tabNoms[$i] => $this->tabImages[$tabNoms[$i]]];
+                $nomImage[$i] = key($this->image);
+            }
         }
 
 

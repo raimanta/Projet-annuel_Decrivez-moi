@@ -28,6 +28,10 @@ class PrivateView extends View {
 				     $this->routeur->getAProposURL()           => "A propos"               );
 	}
 
+	function insert($tab) {
+		$tab[] = $value;
+	}
+
 	function jouer($tabImages, $tabTags, $data = []) {
 		$this->title = "Jouer une partie";
 
@@ -49,14 +53,46 @@ class PrivateView extends View {
 		$val = "<center> <div id=\"tps_restant\"></div></center><br>";
 
 		//$val = "<h2>$this->image</h2>";//Temporaire
-		$val .= "<img class = \"imgJouer\" src = " . Router::DEB_URL. "/src/view/images/$nomImg alt=\"erreur:/images/$nomImg\" style=\"display: block;margin-left: auto;margin-right: auto; width: 35%;\">";
 
-		$val .= "<div id=\"tags\"> <form action=\"".$this->routeur->getTagsURL()."\" method=\"post\">
-				 	<div>Tags : <input type=\"text\" name=\"tag\"/></div>
-				 	<button type=\"submit\">Envoyer !</button>
+		$val .= "<img class = \"imgJouer\" src = " . Router::DEB_URL. "/src/view/images/$nomImg alt=\"erreur:/images/$nomImg[0]\" style=\"display: block;margin-left: auto;margin-right: auto; width: 35%;\">";
+
+		$val .= "<div id=\"tags\"> <form action=\"".$this->routeur->getTagsURL()."\" id='form' method=\"post\">
+				 	<div>Tags : <input type=\"text\" id=\"tag\" name=\"tag\"/></div>
+				 	<button name='button1' type=\"submit\" id='btn'>Envoyer !</button>
 				 </form></div>";
 
+		/*$val.= "<script>
+				var tab = JSON.parse(".json_encode($tab).");
+				$(document).ready(function() {
+					$('#btn').click(function(e) {
+						e.preventDefault();
+						var tag = $('#tag').val();
+						$.ajax
+							({
+								type: 'POST',
+								url: '',
+								data: { 'tag': tag },
+								success: function(data) {
+									$.each(data, function(i) {
+										tab[i] = data[i];
+									});
+								}
+							});
+					});
+				});
+				</script>";*/
+		$value = "";
+
+		/*if( isset($_POST['button1']) ) {
+			$tab[0] = $_POST['tag'];
+		}*/
+
+		/*$val .= "<div id='tags' style=\"align: center;\">
+				<div> Tags : <input type='text' id='tag' value='$value'> <button id='btn' onclick='insert(".$tab.")'>Envoyer !</button> </div>
+				</div>";*/
+
 		$val .= "<ul>";
+
 		for ($i=0; $i < count($tab); $i++) {
 			if ($i === 0) {
 				$val .= "Tags correspondant à l'image : ";
@@ -67,7 +103,7 @@ class PrivateView extends View {
 			else {
 				$val .= "<br/><br/>Tags ne correspondant pas à l'image : ";
 				foreach ($tab[1] as $key => $value) {
-					$val .= "<li>$value</li>";
+					$val .= "<li>$key => $value</li>";
 				}
 			}
 
@@ -140,3 +176,4 @@ class PrivateView extends View {
 	}
 
 }
+?>
