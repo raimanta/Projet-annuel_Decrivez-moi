@@ -7,7 +7,9 @@
 		<?php echo $this->scriptJS ?> 
 	</head>
 
-
+<?php
+	require_once("view/PrivateView.php");
+?>
 
 	<body>
 		<nav >

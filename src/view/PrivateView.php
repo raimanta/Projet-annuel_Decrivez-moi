@@ -139,3 +139,4 @@ class PrivateView extends View {
 	}
 
 }
+?>
