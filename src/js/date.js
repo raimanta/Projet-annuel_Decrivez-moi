@@ -3,9 +3,12 @@ function affichBien(nombre) {
 }
 
 function dateEtHeure() {
-    console.log("je suis laaaaaaa");
+
     const date = new Date();
-    document.getElementById('heure_exacte').innerHTML = 'Nous sommes le ' + date.getDate() + ' et il est : ' + affichBien(date.getHours()) + ':' + affichBien(date.getMinutes()) + ':' + affichBien(date.getSeconds());
+
+    let divHeure = document.getElementById('heure_exacte');
+    if(divHeure != null)
+        divHeure.innerHTML = 'Nous sommes le ' + date.getDate() + ' et il est : ' + affichBien(date.getHours()) + ':' + affichBien(date.getMinutes()) + ':' + affichBien(date.getSeconds());
 
     let dateDimanche = new Date();
     if (date.getDay() != 0) {
@@ -32,8 +35,9 @@ function dateEtHeure() {
         nbrSecondesAvDimanche = (60 - date.getSeconds());
     }
 
-
-    document.getElementById('date_dimanche').innerHTML = '<br/>Le classement se réinitialise dans : ' + nbrHeuresAvDimanche   + "h "      +
+    let divDateDimanche = document.getElementById('date_dimanche');
+    if(divDateDimanche != null)
+        divDateDimanche.innerHTML = '<br/>Le classement se réinitialise dans : ' + nbrHeuresAvDimanche   + "h "      +
                                                                                                         nbrMinutesAvDimanche  + "min et " +
                                                                                                         nbrSecondesAvDimanche + "s";
 
@@ -42,35 +46,20 @@ function dateEtHeure() {
     }*/
 }
 
+let   i = 1;
 
-/*function insert(tab) {
-    var tag = document.getElementById("tag");
-    tab.push(tag.value);
-    alert(tab);
-    return tab;
-}*/
+function Countdown() {
 
-let i = 1;
+    let divTpsRestant = document.getElementById('tps_restant');
+    if(divTpsRestant != null){
+        divTpsRestant.innerHTML = 60 - i;
+        i = i + 1;
 
-function dateEtHeureMin() {
-    document.getElementById('tps_restant').innerHTML = 'Il vous reste : ' + (60 - i) + 's';
-    i++;
-    if( i > 10 ) {
-        i = 1;
-    }
+        if(i == 61) {
+            //alert("fin du temps");
+            console.log("fin du minuteur");
+            document.getElementById('affichage_tps').style.display = "none";
+            document.getElementById('tags').style.display = "none";
+        }
+    } 
 }
-
-var FuncOL = new Array();
-
-function StkFunc(Obj) {
-    FuncOL[FuncOL.length] = Obj;
-}
-
-StkFunc(setInterval("dateEtHeure()", 100));
-StkFunc(setInterval("dateEtHeureMin()", 1000));
-
-window.onload = function() {
-    for ( i = 0; i < FuncOL.length; i++ ) {
-        FuncOL[i]();
-    }
-};

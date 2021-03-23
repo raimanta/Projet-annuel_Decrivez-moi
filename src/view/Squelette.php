@@ -4,7 +4,7 @@
 		<title><?php echo $this->title; ?></title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href=<?php echo "\"".Router::DEB_URL."/src/view/css/screen.css\"" ?> />
-		<script language="javascript" type="text/javascript" src=<?php echo "\"". Router::DEB_URL."/src/view/js/date.js\""?> ></script>
+		<?php echo $this->scriptJS ?> 
 	</head>
 
 

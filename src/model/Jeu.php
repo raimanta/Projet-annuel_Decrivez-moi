@@ -1,58 +1,30 @@
 <?php
     class Jeu {
-    	public $tablTags;
-    	public $tablTagsAlt;
-        public $image;
+        public $nomImage;
+		public $urlImage;
+		public $idImage; 
 
-        public $tabImages;
+        function __construct($imageStorage) {
 
-
-        function __construct($tabImages, $tabTags) {
-            $this->tablTags    = [];
-    		$this->tablTagsAlt = [];
-            //Temporaire, pour avoir une image avec plusieurs tags
-    		$this->tabImages = [
-    			$tabImages[1]->nom => [$tabTags[1]->nom, $tabTags[2]->nom],
-    			$tabImages[2]->nom => [$tabTags[1]->nom]
-    			];
-
-
-    		//Pour récuérer un tableau de noms
-    		$tabNoms = [];
-    		foreach ($this->tabImages as $key => $value) {
-    			$tabNoms[] = $key;
-    		}
+			$tabImages = $imageStorage->readAllImages();
 
 
     		//Une image aléatoire
-    		//$this->image = $tabNoms[random_int(0, count($tabNoms)-1)];
+    		//$this->image = $tabNoms[random_int(1, count($tabNoms))];
+			$random = random_int(1, count($tabImages)); 
+			$this->nomImage = $tabImages[$random]->nom;
+			$this->urlImage = $tabImages[$random]->url;
+			$this->idImage  = $tabImages[$random]->id;
 
     		//récupère une image
-    		$this->image = [$tabNoms[0] => $this->tabImages[$tabNoms[0]]];
+			
+    		/*$this->nomImage = $tabImages[2]->nom;
+			$this->urlImage = $tabImages[2]->url;*/
+			
 
-            $_SESSION['nomImg'] = key($this->image);
+            $_SESSION['idImg']  = $this->idImage;
+			$_SESSION['nomImg'] = $this->nomImage;
+			$_SESSION['urlImg'] = $this->urlImage;
         }
-
-
-        public function jouerPartie($data = []) {
-			// faire le test de savoir si le tag ecrit est dans la bdd de l'image
-            $nomImg = $_SESSION['nomImg'];
-            $tagTrouve = false;
-            if ($data['tag'] != '') {
-                for ($i=0; $i < count($this->image[$nomImg]); $i++) {
-    				if ($data['tag'] === $this->image[$nomImg][$i] && !in_array($data['tag'], $this->tablTags)) {
-    					$this->tablTags[] = $data['tag'];
-    					$tagTrouve = true;
-    					break;
-    				}
-    			}
-    			if (! $tagTrouve && !in_array($data['tag'], $this->tablTagsAlt) && !in_array($data['tag'], $this->tablTags)) {
-    				$this->tablTagsAlt[] = $data['tag'];
-    			}
-                return array($this->tablTags, $this->tablTagsAlt);
-            }
-			return;
-        }
-    }
-
+	}
 ?>

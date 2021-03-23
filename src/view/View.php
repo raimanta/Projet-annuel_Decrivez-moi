@@ -2,6 +2,8 @@
 
 class View{
 	public $title;
+	public $scriptJS;
+
 	public $content;
 	public $routeur;
 	public $menu;
@@ -9,11 +11,12 @@ class View{
 
 
 	function __construct($routeur, $feedback=""){
-		$this->title = "";
-		$this->content = "";
-		$this->routeur = $routeur;
-		$this->menu = $this->getMenu();
-		$this->feedback=$feedback;
+		$this->title     = "";
+		$this->scriptJS = "";
+		$this->content   = "";
+		$this->routeur   = $routeur;
+		$this->menu      = $this->getMenu();
+		$this->feedback  = $feedback;
 
 		//echo "<script> src=\"/barre.js\"></script>";
 	}

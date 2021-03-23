@@ -3,9 +3,9 @@ require_once("view/View.php");
 require_once("view/PrivateView.php");
 require_once("control/Controller.php");
 class Router {
-	const DB_ID    = 'mysql:host=mysql.info.unicaen.fr;dbname=22010959_bd;charset=utf8mb4';
-	const USER_ID  = '22010959';
-	const PASSWORD = 'Bi4ropieb4Ausiel';
+	const DB_ID    = 'mysql:host=mysql.info.unicaen.fr;dbname=22011564_bd;charset=utf8mb4';
+	const USER_ID  = '22011564';
+	const PASSWORD = 'ye3fahch6Aeshie8';
 	const DEB_URL = "https://dev-".Router::USER_ID.".users.info.unicaen.fr/projet_annuel";
 	public $estco = false;
 	function main($imageStorage, $accountStorage){
@@ -54,11 +54,16 @@ class Router {
 					$controller->jouerPartieCtrl();
 					break;
 				}
-				else if($value==="tags"){
+				else if($value==="tag"){
                     $verify = true;
-                    $controller->showTags($_POST);
+                    $controller->createTag($_GET['tag']);
 					break;
                 }
+				else if($value==="image"){
+					$verify = true;
+					$controller->createImage($_GET['img']);
+					break;
+				}
 				else if($value==="classement"){
                     $verify = true;
                     $controller->showClassement();
@@ -129,9 +134,14 @@ class Router {
 		return Router::DEB_URL."/index.php/jouerPartie";
 	}
 
-	function getTagsURL() {
-		return Router::DEB_URL."/index.php/tags";
+	function getTagCreationURL(){
+		return Router::DEB_URL."/index.php/tag";
 	}
+
+	function getImgCreationURL(){
+		return Router::DEB_URL."/index.php/image";
+	}
+
 	function getClassementJoueurs(){
 		return Router::DEB_URL."/index.php/classement";
 	}
