@@ -4,8 +4,10 @@ function affichBien(nombre) {
 
 function dateEtHeure() {
     const date = new Date();
-    document.getElementById('heure_exacte').innerHTML = 'Nous sommes le ' + date.getDate() + ' et il est : ' + affichBien(date.getHours()) + ':' + affichBien(date.getMinutes()) + ':' + affichBien(date.getSeconds());
-
+    let divHeure = document.getElementById('heure_exacte');
+    if(divHeure != null){
+        divHeure.innerHTML = 'Nous sommes le ' + date.getDate() + ' et il est : ' + affichBien(date.getHours()) + ':' + affichBien(date.getMinutes()) + ':' + affichBien(date.getSeconds());
+    }
     let dateDimanche = new Date();
     if (date.getDay() != 0) {
         dateDimanche.setDate(date.getDate()-date.getDay()+7); // permet de récuperer la date du prochain dimanche
@@ -31,10 +33,12 @@ function dateEtHeure() {
         nbrSecondesAvDimanche = (60 - date.getSeconds());
     }
 
-
-    document.getElementById('date_dimanche').innerHTML = '<br/>Le classement se réinitialise dans : ' + nbrHeuresAvDimanche   + "h "      +
-                                                                                                        nbrMinutesAvDimanche  + "min et " +
-                                                                                                        nbrSecondesAvDimanche + "s";
+    let divDate = document.getElementById('date_dimanche');
+    if(divDate != null){
+            divDate.innerHTML = '<br/>Le classement se réinitialise dans : ' + nbrHeuresAvDimanche   + "h "      +
+                                                                               nbrMinutesAvDimanche  + "min et " +
+                                                                               nbrSecondesAvDimanche + "s";
+    }
 
     if(nbrHeuresAvDimanche === 0 && nbrMinutesAvDimanche === 0 && nbrSecondesAvDimanche === 1) {
         //utiliser une méthode qui remet tous les scores à 0

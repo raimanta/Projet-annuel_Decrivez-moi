@@ -1,7 +1,7 @@
 <?php
-require_once("model/ImageStorage.php");
-require_once("model/Image.php");
-require_once("model/Tag.php");
+require_once("ImageStorage.php");
+require_once("Image.php");
+require_once("Tag.php");
 class ImageStorageMySQL implements ImageStorage {
 	public $db;
 
@@ -33,11 +33,10 @@ class ImageStorageMySQL implements ImageStorage {
 			    image VARCHAR(255),
 			    PRIMARY KEY (id)
 			)");
-			$img1 = serialize(new Image("Linx.jpg", "chein"));
-			$img2 = serialize(new Image("Grotadmorv.png", "boule"));
+			$img1 = serialize(new Image("Abeille", "3168189778", "https://live.staticflickr.com/1064/3168189778_00e44690fe.jpg", "terpino"));
+			$img2 = serialize(new Image("Heart of a flower", "4000886283", "https://live.staticflickr.com/3486/4000886283_1d124fa4c0.jpg", "**soniatravel**"));
 			$this->db->exec("INSERT INTO images (image) VALUES('$img1')");
 			$this->db->exec("INSERT INTO images (image) VALUES('$img2')");
-
 
 			$this->db->exec("DROP TABLE IF EXISTS tags");
 			$this->db->exec("CREATE TABLE tags
@@ -46,10 +45,8 @@ class ImageStorageMySQL implements ImageStorage {
 			    tag VARCHAR(255),
 			    PRIMARY KEY (id)
 			)");
-			$tag1 = serialize(new Tag("cat"));
-			$tag2 = serialize(new Tag("animal"));
+			$tag1 = serialize(new Tag("abeille"));
 			$this->db->exec("INSERT INTO tags (tag) VALUES('$tag1')");
-			$this->db->exec("INSERT INTO tags (tag) VALUES('$tag2')");
 
 		}
 		catch (PDOExecption $e){
@@ -57,7 +54,14 @@ class ImageStorageMySQL implements ImageStorage {
 		}
 	}
 
-	function readImage($id){
+	public function addImage(Image $image){
+		$rq = "INSERT INTO accounts VALUES(:str)";
+		$stmt = $this->db->prepare($rq);
+		$data = array(':str' => serialize($image));
+		$stmt->execute($data);
+	}
+
+	public function readImage($id){
 		$rq = "SELECT nom FROM images WHERE id = :id";
 		$stmt = $this->db->prepare($rq);
 		$stmt->execute(array(':id' =>$id));
@@ -66,7 +70,7 @@ class ImageStorageMySQL implements ImageStorage {
 		return $image;
 	}
 
-	function readAllImages(){
+	public function readAllImages(){
 		$array = array();
 		$stmt = $this->db->query("SELECT * FROM images");
 		foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $value){
@@ -75,7 +79,15 @@ class ImageStorageMySQL implements ImageStorage {
 		return $array;
 	}
 
-	function readTag($id){
+
+	public function addTag(Tag $tag){
+		$rq = "INSERT INTO accounts VALUES(:str)";
+		$stmt = $this->db->prepare($rq);
+		$data = array(':str' => serialize($tag));
+		$stmt->execute($data);
+	}
+
+	public function readTag($id){
 		$rq = "SELECT nom FROM tags WHERE id = :id";
 		$stmt = $this->db->prepare($rq);
 		$stmt->execute(array(':id' =>$id));
@@ -84,7 +96,7 @@ class ImageStorageMySQL implements ImageStorage {
 		return $tag;
 	}
 
-	function readAllTags(){
+	public function readAllTags(){
 		$array = array();
 		$stmt = $this->db->query("SELECT * FROM tags");
 		foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $value){

@@ -32,12 +32,12 @@ class Controller {
 
 
 	public function jouer() {
-		$this->view->jouer($this->imageStorage->readAllImages(), $this->imageStorage->readAllTags());
+		$this->view->jouer();
 	}
 
 	public function jouerPartieCtrl() {
 		$_SESSION['jeu'] = new Jeu($this->imageStorage->readAllImages(), $this->imageStorage->readAllTags());
-		$this->view->jouerPartieView($_SESSION['nomImg']);
+		$this->view->jouerPartieView($_SESSION['nomImg'], $_SESSION['urlImg'] );
 	}
 
 	public function showTags($data) {
@@ -87,4 +87,11 @@ class Controller {
 			$this->view->displayAccountCreationSuccess();
 		}
 	}
+
+	public function addImage(Image $image){ $this->imageStorage->addImage($image)}
+	public function readImage($id)        { return $this->imageStorage->readImage($id)  }
+	public function readAllImages()  { return $this->imageStorage->readAllImages()  }
+	public function addTag(Tag $tag) { $this->imageStorage->addTag($tag)  } 
+	public function readTag($id)     { return $this->imageStorage->readTag($id)  }
+	public function readAllTags()    { return $this->imageStorage->readAllTags()  }
 }

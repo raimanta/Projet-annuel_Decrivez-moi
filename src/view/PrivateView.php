@@ -2,6 +2,8 @@
 require_once("view/View.php");
 class PrivateView extends View {
 	public $title;
+	public $scriptJS;
+
 	public $content;
 	public $routeur;
 	public $menu;
@@ -12,12 +14,13 @@ class PrivateView extends View {
 	public $image;
 
 	function __construct($routeur, $account, $feedback=""){
-		$this->title    = "";
-		$this->content  = "";
-		$this->routeur  = $routeur;
-		$this->menu     = $this->getMenu();
-		$this->feedback = $feedback;
-		$this->account  = $account;
+		$this->title     = "";
+		$this->scriptJS  = "";
+		$this->content   = "";
+		$this->routeur   = $routeur;
+		$this->menu      = $this->getMenu();
+		$this->feedback  = $feedback;
+		$this->account   = $account;
 	}
 
 	function getMenu(){
@@ -28,51 +31,42 @@ class PrivateView extends View {
 				     $this->routeur->getAProposURL()           => "A propos"               );
 	}
 
-	function jouer($tabImages, $tabTags, $data = []) {
+	function jouer() {
 		$this->title = "Jouer une partie";
 
-
-
+		
 		//Lien vers la fonction jouerPartie(...) ci dessous
-		$val = "<form action=\"".$this->routeur->getJouerPartieURL()."\" method=\"post\">
+		$this->content = "<form action=\"".$this->routeur->getJouerPartieURL()."\" method=\"post\">
 		 		 	<button input type=\"submit\"> Lancer une partie </button>
 		 		 </form>";
 
-		$this->content = $val;
 		$this->render();
 	}
 
-	function jouerPartieView($nomImg, $tab=[]) {
+	function jouerPartieView($nomImg, $urlImg,  $tab=[]) {
 		$this->title = "Jouer une partieee";
+		$this->scriptJS = "<script language=\"javascript\" type=\"text/javascript\" src=\"".Router::DEB_URL."/src/js/jeu.js\"> </script>\n
+		                   <script language=\"javascript\" type=\"text/javascript\" src=\"".Router::DEB_URL."/src/js/date.js\"></script>";
 
+		
 
 		$val = "<center> <div id=\"tps_restant\"></div></center><br>";
 
 		//$val = "<h2>$this->image</h2>";//Temporaire
-		$val .= "<img class = \"imgJouer\" src = " . Router::DEB_URL. "/src/view/images/$nomImg alt=\"erreur:/images/$nomImg\" style=\"display: block;margin-left: auto;margin-right: auto; width: 35%;\">";
+		$val .= "<img id = \"imgGame\" class = \"imgJouer\" src =\"$urlImg \" alt=\"erreur:$nomImg\" style=\"display: block;margin-left: auto;margin-right: auto; width: 35%;\">";
 
-		$val .= "<div id=\"tags\"> <form action=\"".$this->routeur->getTagsURL()."\" method=\"post\">
-				 	<div>Tags : <input type=\"text\" name=\"tag\"/></div>
-				 	<button type=\"submit\">Envoyer !</button>
-				 </form></div>";
+		$val .= "<div id=\"tags\"> 
+				 	<div>Tags : <input id=\"txtGame\"type=\"text\" name=\"tag\"/></div>
+				 	<button id=\"myBtn\">Try it</button>
+				</div>";
 
-		$val .= "<ul>";
-		for ($i=0; $i < count($tab); $i++) {
-			if ($i === 0) {
-				$val .= "Tags correspondant à l'image : ";
-				foreach ($tab[0] as $key => $value) {
-					$val .= "<li>$value</li>";
-				}
-			}
-			else {
-				$val .= "<br/><br/>Tags ne correspondant pas à l'image : ";
-				foreach ($tab[1] as $key => $value) {
-					$val .= "<li>$value</li>";
-				}
-			}
-
-		}
+		$val .= "<ul id='tagUse'>";
 		$val .= "</ul>";
+		$val .= "<script> game(); </script>";
+
+		$val .= "<div id=\"tags\"> <form action=\"".$this->routeur->getJouerPartieURL()."\" id=\"form\" method=\"post\">
+								<button  type=\"submit\" id=\"btnRejouer\">Try Again</button>
+				</form></div>";
 
 		$this->content = $val;
 		$this->render();
@@ -94,11 +88,12 @@ class PrivateView extends View {
 
 
 	function showClassementJoueurs($tabAccount) {
-		$this->title = "Classement des joueurs";
+		$this->title  = "Classement des joueurs";
+		$this->scriptJS = "<script language=\"javascript\" type=\"text/javascript\" src=\"".Router::DEB_URL."/src/js/date.js\"></script>";
 		$tabTrie = $this->triClassement($tabAccount);
 
-		$this->content = "
-			<div id=\"heure_exacte\"></div><br>";
+		$this->content  ="<script> window.onload = function() { setInterval(\"dateEtHeure()\", 100) };</script>";
+		$this->content .="<div id=\"heure_exacte\"></div><br>";
 
 		$this->content .= "
 		<br/><div id=\"date_dimanche\"></div><br>";

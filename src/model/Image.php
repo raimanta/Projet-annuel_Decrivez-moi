@@ -2,22 +2,33 @@
 
 class Image {
 	public $nom;
-	public $tags;
-	public $tagsAlt; //tags alternatifs
+	public $id;
+	public $url;
+	public $author;
 
-	function __construct($nom, $tags) {
+	function __construct($nom, $id, $url, $author) {
+
 		$this->nom  = $nom;
-		$this->tags = $tags;
+		$this->id   = $id; 
+		$this->url  = $url;
+		$this->author = $author;
 	}
 
-	public function getName()   { return $this->nom;       }
+	public function equals($image) {
+		return $this->nom    === $nom    &&
+			   $this->id     === $id     &&
+		       $this->url    === $url    &&
+		       $this->author === $author;
+	}
 
-	public function getTag($id) { return $this->tags[$id]; }
+	public function getName()  { return $this->nom;          }
+	public function getID()    { return $this->id;           }
+	public function getUrl()   { return $this->url;          }
+	public function getAuthor(){ return $this->author;       }
 
-	public function getTags()   { return $this->tags;      }
+	public function setName($name)    { $this->nom    = $name;  }
+	public function setID($id)        { $this->id     = $id;    }
+	public function setUrl($url)      { $this->url    = $url;   }
+	public function setAuthor($author){ $this->author = $author;}
 
-
-	public function setName($name)   { $this->nom    = $name;  }
-
-	public function addTag($tag)   { array_push($this->tags, $tag);  }
 }
