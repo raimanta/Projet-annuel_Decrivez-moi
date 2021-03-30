@@ -34,6 +34,9 @@ class Account {
 		return $this->login;
 	}
 
+	public function getScore(){
+		return $this->scoreSemaine;
+	}
 
 	public function addScore($score){
 		$this->scoreSemaine += $score;

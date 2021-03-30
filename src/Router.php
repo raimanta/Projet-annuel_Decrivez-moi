@@ -2,10 +2,11 @@
 require_once("view/View.php");
 require_once("view/PrivateView.php");
 require_once("control/Controller.php");
+require_once("Log.php");
 class Router {
-	const DB_ID    = 'mysql:host=mysql.info.unicaen.fr;dbname=22011564_bd;charset=utf8mb4';
-	const USER_ID  = '22011564';
-	const PASSWORD = 'ye3fahch6Aeshie8';
+	const DB_ID    = 'mysql:host=mysql.info.unicaen.fr;dbname='.DATABASE.';charset=utf8mb4'; //NO COMMIT
+	const USER_ID  = NUMETU; //NO COMMIT
+	const PASSWORD = PASSWORD; //NO COMMIT
 	const DEB_URL = "https://dev-".Router::USER_ID.".users.info.unicaen.fr/projet_annuel";
 	public $estco = false;
 	function main($imageStorage, $accountStorage){

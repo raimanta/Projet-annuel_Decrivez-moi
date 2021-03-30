@@ -78,8 +78,13 @@ class PrivateView extends View {
 
 	function makeProfilPage() {
 		$this->title = "Profil";
+		$val = "<p>Bonjour ".$this->account->getName()." </p>";
+		$val .= "<p>Votre score de la semaine est : ".$this->account->getScore()." !</p>";
+		if($this->account->getStatut()==="admin"){
+			$val .= "<p>Vous etes administrateur !</p>";
+		}
 
-		$this->content = "page de profil";
+		$this->content = $val;
 		$this->render();
 	}
 
