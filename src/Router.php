@@ -3,9 +3,9 @@ require_once("view/View.php");
 require_once("view/PrivateView.php");
 require_once("control/Controller.php");
 class Router {
-	const DB_ID    = 'mysql:host=mysql.info.unicaen.fr;dbname=22011564_bd;charset=utf8mb4';
-	const USER_ID  = '22011564';
-	const PASSWORD = 'ye3fahch6Aeshie8';
+	const DB_ID    = 'mysql:host=mysql.info.unicaen.fr;dbname=22009118_bd;charset=utf8mb4';
+	const USER_ID  = '22009118';
+	const PASSWORD = 'thaa9yeeraifai0I';
 	const DEB_URL = "https://dev-".Router::USER_ID.".users.info.unicaen.fr/projet_annuel";
 	public $estco = false;
 	function main($imageStorage, $accountStorage){
