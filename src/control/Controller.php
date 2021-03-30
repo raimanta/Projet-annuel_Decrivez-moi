@@ -40,6 +40,11 @@ class Controller {
 		$this->view->jouerPartieView($_SESSION['nomImg'],$_SESSION['idImg'], $_SESSION['urlImg'], $this->imageStorage->readAllImages());
 	}
 
+	public function updateScore($score){
+		$account = $_SESSION['user'];
+		$this->accountStorage->updateScore($account, $score);
+	}
+
 	public function createTag($tag) {
 		$boolTag = false;
 		$tmpTag = new Tag($tag);
