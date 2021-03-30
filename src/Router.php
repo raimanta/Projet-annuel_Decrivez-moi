@@ -3,10 +3,10 @@ require_once("view/View.php");
 require_once("view/PrivateView.php");
 require_once("control/Controller.php");
 class Router {
-	const DB_ID    = 'mysql:host=mysql.info.unicaen.fr;dbname=22009118_1;charset=utf8mb4';
-	const USER_ID  = '22009118';
-	const PASSWORD = 'thaa9yeeraifai0I';
-	const DEB_URL = "https://dev-".Router::USER_ID.".users.info.unicaen.fr/projet_annuel";
+	const DB_ID    = 'mysql:host=mysql.info.unicaen.fr;dbname=22009146_bd;charset=utf8mb4';
+	const USER_ID  = '22009146';
+	const PASSWORD = 'zier3aiy5Yo7ohng';
+	const DEB_URL = "https://dev-".Router::USER_ID.".users.info.unicaen.fr/Projet_annuel/V2";
 	public $estco = false;
 	function main($imageStorage, $accountStorage){
 		session_start();
@@ -34,7 +34,7 @@ class Router {
 		else {
 			//Initialisation qui permet de recuperer l'id
 			$id = 0;
-			$array = array("jouer", "classement", "connexion", "deconnexion", "profil", "compte", "aPropos", "accueil", "tags", "jouerPartie", "");
+			$array = array("jouer", "classement", "connexion", "deconnexion", "profil", "compte", "aPropos", "accueil", "tags", "jouerPartie", "score", "resetScore", "");
 			foreach (explode("/",$_SERVER['PATH_INFO']) as $value) {
 				if(!in_array($value, $array)){
 					$id=$value;
@@ -57,6 +57,10 @@ class Router {
 				else if($value==="score"){
 					$verify = true;
 					$controller->updateScore($_GET['score']);
+				}
+				else if($value==="resetScore"){
+					$verify = true;
+					$controller->resetScore();
 				}
 				else if($value==="tag"){
                     $verify = true;

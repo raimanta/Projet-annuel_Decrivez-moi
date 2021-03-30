@@ -40,9 +40,13 @@ class Controller {
 		$this->view->jouerPartieView($_SESSION['nomImg'],$_SESSION['idImg'], $_SESSION['urlImg'], $this->imageStorage->readAllImages());
 	}
 
-	public function updateScore($score){
+	public function updateScore($score) {
 		$account = $_SESSION['user'];
 		$this->accountStorage->updateScore($account, $score);
+	}
+
+	public function resetScore() {
+		$this->accountStorage->resetScore();
 	}
 
 	public function createTag($tag) {
@@ -52,27 +56,27 @@ class Controller {
 			if($value->equals($tmpTag)) $boolTag = true;
 		}
 
-		if(!$boolTag) $this->imageStorage->addTag($tmpTag); 
+		if(!$boolTag) $this->imageStorage->addTag($tmpTag);
 	}
 
 	public function createImage($image) {
 		var_dump($image);
 		$boolImg = false;
 		list($id, $secret, $server, $author, $title) = explode("_", $image);
-		
+
 	    $imgUrl = "https://live.staticflickr.com/$server/$id"."_$secret.jpg";
 		var_dump($imgUrl);
 		$tmpImg = new Image($title, $id, $imgUrl, $author);
 		var_dump($tmpImg);
-		
+
 		foreach($this->imageStorage->readAllImages() as $value ){
 
 			if($value->equals($tmpImg)) $boolImg = true;
 		}
-	
+
 		if(!$boolImg){
 			var_dump("last bool");
-			$this->imageStorage->addImage($tmpImg); 
+			$this->imageStorage->addImage($tmpImg);
 		}
 
 	}

@@ -9,14 +9,14 @@ function game(id){
     let arrayTag = Array();
 
     let txt = document.getElementById("txtGame");
-    
+
 
     document.getElementById("myBtn").addEventListener("click", function() {
         if (!inArray(txt.value, arrayTag)) {
             arrayTag.push(txt.value)
             calculTagsPhoto(id, txt.value);
         }
-        
+
         //console.log(arrayTag);
         imgChange(txt.value);
         var xmlhttp = new XMLHttpRequest();
@@ -43,34 +43,35 @@ function calculTagsPhoto(id, strTag){
 
                 let pts = document.getElementById('tps_restant').innerHTML;
                 document.getElementById("scoreJoueur").value = parseInt(pts)+parseInt(document.getElementById("scoreJoueur").value);
+
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         console.log(this.responseText);
                     }
                 };
-                let score = document.getElementById("scoreJoueur").value;
-                xmlhttp.open("GET", "index.php/score?score="+score , true);
+
+                xmlhttp.open("GET", "index.php/score?score=" + pts , true);
                 xmlhttp.send();
 
                 let ulTag = document.getElementById("tagRight");
                 var li = document.createElement("li");
                 li.appendChild(document.createTextNode(strTag));
                 ulTag.appendChild(li);
-                //console.log(element.raw)
+                console.log(element.raw)
                 isWrong = false;
             }
-           
+
             console.log("tags : "+element.raw)
         });
-        
+
         if(isWrong){
             let ulTag = document.getElementById("tagWrong");
             var li = document.createElement("li");
             li.appendChild(document.createTextNode(strTag));
             ulTag.appendChild(li);
         }
-        
+
     });
 }
 
@@ -83,11 +84,11 @@ function imgChange(tag){
         value.photos.photo.forEach(element => {
             console.log(element);
             let id = element.id;
-            let server = element.server ; 
-            let secret = element.secret ; 
-            let author = element.username ; 
+            let server = element.server ;
+            let secret = element.secret ;
+            let author = element.username ;
             let title  = element.title;
-            
+
             /* Ajouter des Images à la BD en fonction du tags donnée*/
             // A completer...
             var xmlhttp = new XMLHttpRequest();
@@ -101,8 +102,8 @@ function imgChange(tag){
 
             //change l'image du jeu par une image en fonction du tag donnée (debug)
             //document.getElementById('imgGame').setAttribute("src", "https://live.staticflickr.com/"+server+"/"+id+"_"+secret+".jpg")
-        }); 
-    }); 
+        });
+    });
 }
 
 

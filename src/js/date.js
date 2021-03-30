@@ -10,18 +10,6 @@ function dateEtHeure() {
     if(divHeure != null)
         divHeure.innerHTML = 'Nous sommes le ' + date.getDate() + ' et il est : ' + affichBien(date.getHours()) + ':' + affichBien(date.getMinutes()) + ':' + affichBien(date.getSeconds());
 
-    let dateDimanche = new Date();
-    if (date.getDay() != 0) {
-        dateDimanche.setDate(date.getDate()-date.getDay()+7); // permet de récuperer la date du prochain dimanche
-    }
-    else {
-        dateDimanche.setDate(date.getDate()); // permet de récuperer la date du prochain dimanche
-    }
-
-    dateDimanche.setHours(23);
-    dateDimanche.setMinutes(59);
-    dateDimanche.setSeconds(59);
-
     let nbrHeuresAvDimanche, nbrMinutesAvDimanche, nbrSecondesAvDimanche;
 
     if (date.getDay() != 0) {
@@ -41,9 +29,18 @@ function dateEtHeure() {
                                                                                                         nbrMinutesAvDimanche  + "min et " +
                                                                                                         nbrSecondesAvDimanche + "s";
 
-    /*if(nbrHeuresAvDimanche === 0 && nbrMinutesAvDimanche === 0 && nbrSecondesAvDimanche === 1) {
-        //utiliser une méthode qui remet tous les scores à 0
-    }*/
+    if(nbrHeuresAvDimanche === 123 && nbrMinutesAvDimanche === 48 && nbrSecondesAvDimanche === 59) {
+        console.log("J'ai tout remis à 0");
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+            }
+        };
+
+        xmlhttp.open("GET", "index.php/resetScore", true);
+        xmlhttp.send();
+    }
 }
 
 let   i = 1;
@@ -57,11 +54,11 @@ function Countdown() {
 
         if(i == 61) {
             //update le score
-            
+
             //alert("fin du temps");
             console.log("fin du minuteur");
             document.getElementById('affichage_tps').style.display = "none";
             document.getElementById('tags').style.display = "none";
         }
-    } 
+    }
 }
