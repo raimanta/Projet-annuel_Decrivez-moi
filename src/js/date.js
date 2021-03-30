@@ -29,8 +29,8 @@ function dateEtHeure() {
                                                                                                         nbrMinutesAvDimanche  + "min et " +
                                                                                                         nbrSecondesAvDimanche + "s";
 
-    if(nbrHeuresAvDimanche === 123 && nbrMinutesAvDimanche === 48 && nbrSecondesAvDimanche === 59) {
-        console.log("J'ai tout remis à 0");
+    if(nbrHeuresAvDimanche === 121 && nbrMinutesAvDimanche === 39 && nbrSecondesAvDimanche === 05) {
+        //console.log("J'ai tout remis à 0");
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
