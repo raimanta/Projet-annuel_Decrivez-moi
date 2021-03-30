@@ -95,7 +95,6 @@ class PrivateView extends View {
 		$this->title  = "Classement des joueurs";
 		$this->scriptJS = "<script language=\"javascript\" type=\"text/javascript\" src=\"".Router::DEB_URL."/src/js/date.js\"></script>";
 		$tabTrie = $this->triClassement($tabAccount);
-
 		$this->content  ="<script> window.onload = function() { setInterval(\"dateEtHeure()\", 100) };</script>";
 		$this->content .="<div id=\"heure_exacte\"></div><br>";
 
@@ -115,21 +114,22 @@ class PrivateView extends View {
 
 
 	private function triClassement($tabAccount) {
-		$tabScore = [];
-		foreach ($tabAccount as $key => $value) {
-			$tabScore[] = $value->scoreSemaine;
-		}
-		rsort($tabScore);
-		$tabAccountTri = [];
-		foreach ($tabScore as $key => $value) {
-			for ($i=1; $i <= count($tabAccount); $i++) {
-				if ($tabAccount[$i]->scoreSemaine === $value) {
-					$tabAccountTri[] = $tabAccount[$i];
-				}
+
+		for ($i=1; $i <= count($tabAccount); $i++){
+			$maxScoreID = $i;
+			for ($j=$i; $j <= count($tabAccount); $j++){
+				if ($tabAccount[$j]->scoreSemaine > $tabAccount[$maxScoreID]->scoreSemaine)
+				$maxScoreID = $j; 
 			}
+
+			$tmp = $tabAccount[$i];
+			$tabAccount[$i] = $tabAccount[$maxScoreID];
+			$tabAccount[$maxScoreID] = $tmp; 
 		}
-		return $tabAccountTri;
+
+		return $tabAccount;
 	}
+
 	function makeLogoutPage(){
 		$this->title = "Page de deconnexion";
 		$this->content = "<form action=\"".$this->routeur->getLogoutURL()."\" method=\"post\">
