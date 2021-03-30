@@ -107,4 +107,17 @@ class AccountStorageMySQL implements AccountStorage {
 			}
 		}
 	}
+
+	function updateScore($compte, $score) {
+		$stmt = $this->db->query("SELECT * FROM accounts");
+		foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $value) {
+			$val = $value['account'];
+			$account = unserialize($val);
+			if($account->getLogin()===$compte->getLogin()){
+				$account->addScore($score);
+				$str = serialize($account);
+				$this->db->exec("UPDATE accounts SET account = '$str' WHERE account = '$val'");
+			}
+		}
+	}
 }

@@ -13,7 +13,7 @@ class ImageStorageMySQL implements ImageStorage {
 			try {
 				$this->db = new PDO($dsn, $user, $pass);
 				$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				self::reinit();
+				//self::reinit();
 			}
 			catch (PDOExecption $e){
 				throw new PDOExecption($e->getMessage(), $e->getCode());

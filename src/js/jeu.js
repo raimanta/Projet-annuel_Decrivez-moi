@@ -1,5 +1,4 @@
-const apiKey = '634ab2492333bed00e15d902d7f621f5';
-
+const apiKey = 'fdea195738d5a88c851a880e2b1b46c2';
 
 
 function game(id){
@@ -44,8 +43,15 @@ function calculTagsPhoto(id, strTag){
 
                 let pts = document.getElementById('tps_restant').innerHTML;
                 document.getElementById("scoreJoueur").value = parseInt(pts)+parseInt(document.getElementById("scoreJoueur").value);
-
-
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText);
+                    }
+                };
+                let score = document.getElementById("scoreJoueur").value;
+                xmlhttp.open("GET", "index.php/score?score="+score , true);
+                xmlhttp.send();
 
                 let ulTag = document.getElementById("tagRight");
                 var li = document.createElement("li");

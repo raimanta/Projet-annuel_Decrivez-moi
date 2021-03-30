@@ -56,6 +56,8 @@ function Countdown() {
         i = i + 1;
 
         if(i == 61) {
+            //update le score
+            
             //alert("fin du temps");
             console.log("fin du minuteur");
             document.getElementById('affichage_tps').style.display = "none";
