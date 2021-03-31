@@ -7,7 +7,7 @@ class Router {
 	const DB_ID    = 'mysql:host=mysql.info.unicaen.fr;dbname='.DATABASE.';charset=utf8mb4'; //NO COMMIT
 	const USER_ID  = NUMETU; //NO COMMIT
 	const PASSWORD = PASSWORD; //NO COMMIT
-	const DEB_URL = "https://dev-".Router::USER_ID.".users.info.unicaen.fr/projet_annuel";
+	const DEB_URL = "https://dev-".Router::USER_ID.".users.info.unicaen.fr/Projet_annuel/V2";
 	public $estco = false;
 	function main($imageStorage, $accountStorage){
 		session_start();

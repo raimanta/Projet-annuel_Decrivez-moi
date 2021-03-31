@@ -18,7 +18,7 @@ function game(id){
 
         //console.log(arrayTag);
         imgChange(txt.value);
-        //Appel de la page index.php pour ajouter le tag donnée a la base de donnée    
+        //Appel de la page index.php pour ajouter le tag donnée a la base de donnée
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -49,7 +49,7 @@ function calculTagsPhoto(id, strTag){
                 let pts = document.getElementById('tps_restant').innerHTML;
                 document.getElementById("scoreJoueur").value = parseInt(pts)+parseInt(document.getElementById("scoreJoueur").value);
 
-                //Appel de la de la page index.php pour passer le nombre de point gagner 
+                //Appel de la de la page index.php pour passer le nombre de point gagner
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) { console.log(this.responseText); }
@@ -90,7 +90,7 @@ function imgChange(tag){
 
         value.photos.photo.forEach(element => {
             console.log(element);
-            //Recuperation des infrrmation utile pour l'ajout d'une photo a la base de donnée
+            //Recuperation des informations utiles pour l'ajout d'une photo a la base de donnée
             let id = element.id;
             let server = element.server ;
             let secret = element.secret ;

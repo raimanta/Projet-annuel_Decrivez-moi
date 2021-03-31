@@ -34,7 +34,7 @@ class PrivateView extends View {
 	function jouer() {
 		$this->title = "Jouer une partie";
 
-		
+
 		//Lien vers la fonction jouerPartie(...) ci dessous
 		$this->content = "<form action=\"".$this->routeur->getJouerPartieURL()."\" method=\"post\">
 		 		 	<button input type=\"submit\"> Lancer une partie </button>
@@ -48,7 +48,7 @@ class PrivateView extends View {
 		$this->scriptJS = "<script language=\"javascript\" type=\"text/javascript\" src=\"".Router::DEB_URL."/src/js/jeu.js\"> </script>\n
 		                   <script language=\"javascript\" type=\"text/javascript\" src=\"".Router::DEB_URL."/src/js/date.js\"></script>";
 
-		
+
 
 		$val = "<center> <div id=\"affichage_tps\">Il vous reste : <span id=\"tps_restant\"></span> s</div></center><br>";
 
@@ -65,26 +65,27 @@ class PrivateView extends View {
 
 		$val .= "<ul id='tagRight'> Tag(s) Correct(s) : ";
 		$val .= "</ul>";
-		
+
 		$val .= "<div id=\"form\"> <form action=\"".$this->routeur->getJouerPartieURL()."\" method=\"post\">
 								<button  type=\"submit\" id=\"btnRejouer\">Try Again</button>
 								score : <input type=\"number\" id=\"scoreJoueur\" name=\"scoreJoueur\" value=\"0\" min=\"0\" disabled=\"disabled\">
 				</form></div>";
 		$val .= "<script> game(".$idImg."); </script>";
-		//var_dump($tab);
 		$this->content = $val;
 		$this->render();
 	}
 
 	function makeProfilPage($classement) {
 		$this->title = "Profil";
-		
+
 		$val = "<p>Bonjour ".$this->account->getName()." </p>";
 		$val .= "<p>Votre score de la semaine est : ".$this->account->getScore()." !</p>";
 		if($this->account->getStatut()==="admin"){
 			$val .= "<p>Vous etes administrateur !</p>";
 		}
 		$val .= "<p>Votre classement de la semaine est : ".$classement." !</p>";
+
+		$val .= "<input type=\"submit\" value=\"Modifier le profil\">";
 
 		$this->content = $val;
 		$this->render();

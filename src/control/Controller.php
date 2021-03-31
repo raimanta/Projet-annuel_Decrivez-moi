@@ -38,12 +38,12 @@ class Controller {
 			$maxScoreID = $i;
 			for ($j=$i; $j <= count($tabAccount); $j++){
 				if ($tabAccount[$j]->scoreSemaine > $tabAccount[$maxScoreID]->scoreSemaine)
-				$maxScoreID = $j; 
+				$maxScoreID = $j;
 			}
 
 			$tmp = $tabAccount[$i];
 			$tabAccount[$i] = $tabAccount[$maxScoreID];
-			$tabAccount[$maxScoreID] = $tmp; 
+			$tabAccount[$maxScoreID] = $tmp;
 		}
 
 		return $tabAccount;
@@ -66,7 +66,7 @@ class Controller {
 			if($value->equals($tmpTag)) $boolTag = true;
 		}
 
-		if(!$boolTag) $this->imageStorage->addTag($tmpTag); 
+		if(!$boolTag) $this->imageStorage->addTag($tmpTag);
 	}
 
 	public function updateScore($score) {
@@ -83,20 +83,20 @@ class Controller {
 		//var_dump($image);
 		$boolImg = false;
 		list($id, $secret, $server, $author, $title) = explode("_", $image);
-		
+
 	    $imgUrl = "https://live.staticflickr.com/$server/$id"."_$secret.jpg";
 		//var_dump($imgUrl);
 		$tmpImg = new Image($title, $id, $imgUrl, $author);
 		//var_dump($tmpImg);
-		
+
 		foreach($this->imageStorage->readAllImages() as $value ){
 
 			if($value->equals($tmpImg)) $boolImg = true;
 		}
-	
+
 		if(!$boolImg){
 			//var_dump("last bool");
-			$this->imageStorage->addImage($tmpImg); 
+			$this->imageStorage->addImage($tmpImg);
 		}
 
 	}
@@ -145,4 +145,3 @@ class Controller {
 		}
 	}
 }
-

@@ -7,7 +7,7 @@ class Account {
 	public $scoreSemaine;
 	public $statut;
 
-	function __construct($name, $login, $password, $scoreSemaine, $statut='default'){
+	function __construct($name, $login, $password, $scoreSemaine=0, $statut='default'){
 		$this->name = $name;
 		$this->login = $login;
 		$this->password = $password;

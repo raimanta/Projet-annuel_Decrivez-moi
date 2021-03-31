@@ -1,7 +1,6 @@
 <?php
 require_once("ImageStorage.php");
 require_once("Image.php");
-require_once("Tag.php");
 class ImageStorageMySQL implements ImageStorage {
 	public $db;
 
@@ -33,21 +32,23 @@ class ImageStorageMySQL implements ImageStorage {
 			    image VARCHAR(3000),
 			    PRIMARY KEY (id)
 			)");
-			$img1 = serialize(new Image("Abeille", "3168189778", "https://live.staticflickr.com/1064/3168189778_00e44690fe.jpg", "terpino"));
-			$img2 = serialize(new Image("Heart of a flower", "4000886283", "https://live.staticflickr.com/3486/4000886283_1d124fa4c0.jpg", "**soniatravel**"));
-			$this->db->exec("INSERT INTO images (image) VALUES('$img1')");
-			$this->db->exec("INSERT INTO images (image) VALUES('$img2')");
+			$img = serialize(new Image("Abeille", "3168189778", "https://live.staticflickr.com/1064/3168189778_00e44690fe.jpg", "terpino"));
+			$this->db->exec("INSERT INTO images (image) VALUES('$img')");
 
-			$this->db->exec("DROP TABLE IF EXISTS tags");
-			$this->db->exec("CREATE TABLE tags
-			(
-			    id INT(255) NOT NULL AUTO_INCREMENT,
-			    tag VARCHAR(3000),
-			    PRIMARY KEY (id)
-			)");
-			$tag1 = serialize(new Tag("abeille"));
-			$this->db->exec("INSERT INTO tags (tag) VALUES('$tag1')");
+			$img = serialize(new Image("Heart of a flower", "4000886283", "https://live.staticflickr.com/3486/4000886283_1d124fa4c0.jpg", "**soniatravel**"));
+			$this->db->exec("INSERT INTO images (image) VALUES('$img')");
 
+			$img = serialize(new Image("Bohol, Philippines (May 2007)", "509221021", "https://live.staticflickr.com/210/509221021_387e26b226.jpg", "terpino"));
+			$this->db->exec("INSERT INTO images (image) VALUES('$img')");
+
+			$img = serialize(new Image("kuroshio sea", "3852077735", "https://live.staticflickr.com/2434/3852077735_ff87893606.jpg", "tharaka"));
+			$this->db->exec("INSERT INTO images (image) VALUES('$img')");
+
+			$img = serialize(new Image("Whale Shark", "2598684913", "https://live.staticflickr.com/3143/2598684913_5c6348b391.jpg", "KiksBalayon"));
+			$this->db->exec("INSERT INTO images (image) VALUES('$img')");
+
+			$img = serialize(new Image("Hell Sunset", "4089964602", "https://live.staticflickr.com/2567/4089964602_cfdebe8827.jpg", "Antonio Goya"));
+			$this->db->exec("INSERT INTO images (image) VALUES('$img')");
 		}
 		catch (PDOExecption $e){
 			throw new PDOExecption($e->getMessage(), $e->getCode());
@@ -76,29 +77,4 @@ class ImageStorageMySQL implements ImageStorage {
 		}
 		return $array;
 	}
-
-
-	public function addTag(Tag $tag){
-		$tmp = serialize($tag);
-		$this->db->exec("INSERT INTO tags (tag) VALUES('$tmp')");
-	}
-
-	public function readTag($id){
-		$rq = "SELECT nom FROM tags WHERE id = :id";
-		$stmt = $this->db->prepare($rq);
-		$stmt->execute(array(':id' =>$id));
-		$res = $stmt->fetch(PDO::FETCH_ASSOC);
-		$tag = unserialize($res['tag']);
-		return $tag;
-	}
-
-	public function readAllTags(){
-		$array = array();
-		$stmt = $this->db->query("SELECT * FROM tags");
-		foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $value){
-			$array[$value['id']] = unserialize($value['tag']);
-		}
-		return $array;
-	}
-
 }
