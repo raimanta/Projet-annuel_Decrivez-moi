@@ -76,13 +76,15 @@ class PrivateView extends View {
 		$this->render();
 	}
 
-	function makeProfilPage() {
+	function makeProfilPage($classement) {
 		$this->title = "Profil";
+		
 		$val = "<p>Bonjour ".$this->account->getName()." </p>";
 		$val .= "<p>Votre score de la semaine est : ".$this->account->getScore()." !</p>";
 		if($this->account->getStatut()==="admin"){
 			$val .= "<p>Vous etes administrateur !</p>";
 		}
+		$val .= "<p>Votre classement de la semaine est : ".$classement." !</p>";
 
 		$this->content = $val;
 		$this->render();
@@ -96,10 +98,9 @@ class PrivateView extends View {
 	}
 
 
-	function showClassementJoueurs($tabAccount) {
+	function showClassementJoueurs($tabTrie) {
 		$this->title  = "Classement des joueurs";
 		$this->scriptJS = "<script language=\"javascript\" type=\"text/javascript\" src=\"".Router::DEB_URL."/src/js/date.js\"></script>";
-		$tabTrie = $this->triClassement($tabAccount);
 		$this->content  ="<script> window.onload = function() { setInterval(\"dateEtHeure()\", 100) };</script>";
 		$this->content .="<div id=\"heure_exacte\"></div><br>";
 
@@ -115,24 +116,6 @@ class PrivateView extends View {
 
 		$this->content .= "</ul>";
 		$this->render();
-	}
-
-
-	private function triClassement($tabAccount) {
-
-		for ($i=1; $i <= count($tabAccount); $i++){
-			$maxScoreID = $i;
-			for ($j=$i; $j <= count($tabAccount); $j++){
-				if ($tabAccount[$j]->scoreSemaine > $tabAccount[$maxScoreID]->scoreSemaine)
-				$maxScoreID = $j; 
-			}
-
-			$tmp = $tabAccount[$i];
-			$tabAccount[$i] = $tabAccount[$maxScoreID];
-			$tabAccount[$maxScoreID] = $tmp; 
-		}
-
-		return $tabAccount;
 	}
 
 	function makeLogoutPage(){

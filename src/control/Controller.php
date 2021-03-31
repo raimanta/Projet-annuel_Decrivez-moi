@@ -17,7 +17,36 @@ class Controller {
 	}
 
 	public function showClassement() {
-		$this->view->showClassementJoueurs($this->accountStorage->readAllAccount());
+		$this->view->showClassementJoueurs($this->triClassement($this->accountStorage->readAllAccount()));
+	}
+
+	public function showProfil(){
+		$tabTrie = $this->triClassement($this->accountStorage->readAllAccount());
+		$account = $_SESSION['user'];
+		$classement = -1;
+		for($i=1; $i <= count($tabTrie); $i++){
+			if($tabTrie[$i]->getLogin()===$account->getLogin()){
+				$classement = $i;
+				break;
+			}
+		}
+		$this->view->makeProfilPage($classement);
+	}
+
+	private function triClassement($tabAccount) {
+		for ($i=1; $i <= count($tabAccount); $i++){
+			$maxScoreID = $i;
+			for ($j=$i; $j <= count($tabAccount); $j++){
+				if ($tabAccount[$j]->scoreSemaine > $tabAccount[$maxScoreID]->scoreSemaine)
+				$maxScoreID = $j; 
+			}
+
+			$tmp = $tabAccount[$i];
+			$tabAccount[$i] = $tabAccount[$maxScoreID];
+			$tabAccount[$maxScoreID] = $tmp; 
+		}
+
+		return $tabAccount;
 	}
 
 
@@ -42,6 +71,7 @@ class Controller {
 
 	public function updateScore($score) {
 		$account = $_SESSION['user'];
+		$account->addScore($score);
 		$this->accountStorage->updateScore($account, $score);
 	}
 

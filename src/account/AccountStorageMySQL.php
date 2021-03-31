@@ -33,19 +33,27 @@ class AccountStorageMySQL implements AccountStorage {
 				account VARCHAR(5000),
 				PRIMARY KEY (id)
 			)");
-			$account = new Account("Théo"      , "crauffon"      , '$2y$10$YtNzNxFCrHiXYezE31EVpebXl/5CxjaS.M0g.oOb5vnCpLRAcmoZy', 100);
+			$account = new Account("Théo"      , "crauffon"      , '$2y$10$YtNzNxFCrHiXYezE31EVpebXl/5CxjaS.M0g.oOb5vnCpLRAcmoZy', 0);
 			$str = serialize($account);
 			$this->db->exec("INSERT INTO accounts (account) VALUES('$str')");
 
-			$account = new Account("Nicolas", "lacaille", '$2y$10$Aw0QqjsYlZ51pgp1YGDghO0RTjQPbCoNLU8VbF7HJj6qcvicOh9je', 12);
+			$account = new Account("Nicolas", "lacaille", '$2y$10$Aw0QqjsYlZ51pgp1YGDghO0RTjQPbCoNLU8VbF7HJj6qcvicOh9je', 0);
 			$str = serialize($account);
 			$this->db->exec("INSERT INTO accounts (account) VALUES('$str')");
 
-			$account = new Account("Matéo"       , "ducastel"       , '$2y$10$hEqBLC3bkY3w0LWJJJLW7uMzDKACzkKRQg6P/W9zHH7GQEWxVKnDq', 46, "admin");
+			$account = new Account("Matéo"       , "ducastel"       , '$2y$10$hEqBLC3bkY3w0LWJJJLW7uMzDKACzkKRQg6P/W9zHH7GQEWxVKnDq', 0);
 			$str = serialize($account);
 			$this->db->exec("INSERT INTO accounts (account) VALUES('$str')");
 
-			$account = new Account("David"       , "lin"       , '$2y$10$C2HhEFOUXuJrseiHOtmzU.Jq2/lJ7A0ZIb.7aUcBb0jVY1GxW3e02', 0, "admin");
+			$account = new Account("David"       , "lin"       , '$2y$10$C2HhEFOUXuJrseiHOtmzU.Jq2/lJ7A0ZIb.7aUcBb0jVY1GxW3e02', 0);
+			$str = serialize($account);
+			$this->db->exec("INSERT INTO accounts (account) VALUES('$str')");
+
+			$account = new Account("Marc"       , "spaniol"       , '$2y$10$XS56zKN83fAa35lGHAhMve4nVLZhWA.pIg60JNlSGSiB6yZ.F0p5m', 0, "admin");
+			$str = serialize($account);
+			$this->db->exec("INSERT INTO accounts (account) VALUES('$str')");
+
+			$account = new Account("Bruno"       , "zanuttini"       , '$2y$10$hKhUDH.kD/QvzkOaPyn2PepCXjyRHhuWtgKU6a9Bv1UrWGDCMk3b2', 0, "admin");
 			$str = serialize($account);
 			$this->db->exec("INSERT INTO accounts (account) VALUES('$str')");
 		}
@@ -126,7 +134,7 @@ class AccountStorageMySQL implements AccountStorage {
 		foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $value) {
 			//var_dump($value);
 			foreach($value as $val){
-				if(strlen($val) > 1){ 
+				if(strlen($val) > 1){
 					$account = unserialize($val);
 					$account->resetScore();
 					$str = serialize($account);

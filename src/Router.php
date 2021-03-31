@@ -85,7 +85,7 @@ class Router {
 				}
 				else if($value==="profil"){
 					$verify = true;
-					$view->makeProfilPage();
+					$controller->showProfil();
 					break;
 				}
 				else if($value=="connexion"){

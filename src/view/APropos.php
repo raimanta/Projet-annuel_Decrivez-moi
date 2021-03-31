@@ -99,7 +99,7 @@
     </p>
 
     <p>
-        Afin de configurer le site pour un serveur de la fac, il suffit de changer le nom de la base de données, le login ainsi que le mot de passe dans le fichier lib/ObjectFileDB.php aux lignes 142, 143 et 144. Dans ce fichier sur le git vous trouverez le nom de la bdd et le login de Théo Crauffon mais son mot de passe sera effacé.
+        Afin de configurer le site pour un serveur de la fac, il suffit de changer le nom de la base de données, le login ainsi que le mot de passe dans le fichier Log.php.
     </p>
     ";
     $this->render();
