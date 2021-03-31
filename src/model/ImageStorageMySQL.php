@@ -30,7 +30,7 @@ class ImageStorageMySQL implements ImageStorage {
 			$this->db->exec("CREATE TABLE images
 			(
 			    id INT(255) NOT NULL AUTO_INCREMENT,
-			    image VARCHAR(255),
+			    image VARCHAR(3000),
 			    PRIMARY KEY (id)
 			)");
 			$img1 = serialize(new Image("Abeille", "3168189778", "https://live.staticflickr.com/1064/3168189778_00e44690fe.jpg", "terpino"));
@@ -42,7 +42,7 @@ class ImageStorageMySQL implements ImageStorage {
 			$this->db->exec("CREATE TABLE tags
 			(
 			    id INT(255) NOT NULL AUTO_INCREMENT,
-			    tag VARCHAR(255),
+			    tag VARCHAR(3000),
 			    PRIMARY KEY (id)
 			)");
 			$tag1 = serialize(new Tag("abeille"));
