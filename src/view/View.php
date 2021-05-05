@@ -20,6 +20,7 @@ class View{
 
 		//echo "<script> src=\"/barre.js\"></script>";
 	}
+	
 	function render(){
 		include("Squelette.php");
 	}
